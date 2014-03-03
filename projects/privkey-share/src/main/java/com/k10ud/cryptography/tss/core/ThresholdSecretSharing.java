@@ -2,7 +2,9 @@ package com.k10ud.cryptography.tss.core;
 
 import java.util.Arrays;
 import java.util.Random;
-
+//threshold-secret-sharing © antik10ud
+//Distributed under MIT license
+//https://github.com/antik10ud/threshold-secret-sharing
 //  http://tools.ietf.org/html/draft-mcgrew-tss-03
 // TODO: timing attack solution
 public class ThresholdSecretSharing {
