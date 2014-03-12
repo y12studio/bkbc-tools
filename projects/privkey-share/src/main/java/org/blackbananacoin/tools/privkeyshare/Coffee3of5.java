@@ -22,6 +22,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 
 public class Coffee3of5 {
+	
+	public final static String TEST_ADDR1 = "1Co35VWMwPufEyFWXzXBSU3XWQg5L1gd4e";
 
 	public static void main(String[] args) {
 		// block 288168

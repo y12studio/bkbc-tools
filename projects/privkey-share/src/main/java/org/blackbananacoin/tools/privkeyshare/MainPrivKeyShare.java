@@ -16,6 +16,7 @@
 package org.blackbananacoin.tools.privkeyshare;
 
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -38,9 +39,17 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
 import com.google.bitcoin.core.Address;
+import com.google.bitcoin.core.Base58;
+import com.google.bitcoin.core.BlockChain;
+import com.google.bitcoin.core.DumpedPrivateKey;
 import com.google.bitcoin.core.ECKey;
+import com.google.bitcoin.core.NetworkParameters;
+import com.google.bitcoin.core.PeerAddress;
+import com.google.bitcoin.core.PeerGroup;
 import com.google.bitcoin.core.Utils;
+import com.google.bitcoin.core.Wallet;
 import com.google.bitcoin.params.MainNetParams;
+import com.google.bitcoin.store.MemoryBlockStore;
 import com.google.common.io.BaseEncoding;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -155,7 +164,7 @@ public class MainPrivKeyShare {
 
 	}
 
-	private static void createSharing(int shares, int threshold) {
+	public static String createSharing(int shares, int threshold) {
 		ThresholdSecretSharing tss = new ThresholdSecretSharing();
 		// Create 5 shares, secret recoverable from at least 3 different shares
 		ECKey key = new ECKey();
@@ -172,6 +181,7 @@ public class MainPrivKeyShare {
 		}
 		// byte[][] sharesTarget = { sharesArr[0], sharesArr[2], sharesArr[3] };
 		// recoverPrivateKey(sharesTarget);
+		return "";
 	}
 
 	private static void showKeyDetail(ECKey key) {
@@ -208,6 +218,59 @@ public class MainPrivKeyShare {
 				.withArgName("int").create(OptThreshold));
 		return options;
 
+	}
+
+	public static void sendCoinsFromPrivateKey(String prikeyStr, String addr)
+			throws Exception {
+		NetworkParameters params = MainNetParams.get();
+		try {
+			// Decode the private key from Satoshis Base58 variant. If 51
+			// characters long then it's from Bitcoins
+			// dumpprivkey command and includes a version byte and checksum.
+			// Otherwise assume it's a raw key.
+			ECKey key;
+			if (prikeyStr.length() == 51) {
+				DumpedPrivateKey dumpedPrivateKey = new DumpedPrivateKey(
+						params, prikeyStr);
+				key = dumpedPrivateKey.getKey();
+			} else {
+				BigInteger privKey = Base58.decodeToBigInteger(prikeyStr);
+				key = new ECKey(privKey);
+			}
+			System.out.println("Address from private key is: "
+					+ key.toAddress(params).toString());
+			// And the address ...
+			Address destination = new Address(params, addr);
+
+			// Import the private key to a fresh wallet.
+			Wallet wallet = new Wallet(params);
+			wallet.addKey(key);
+
+			// Find the transactions that involve those coins.
+			final MemoryBlockStore blockStore = new MemoryBlockStore(params);
+			BlockChain chain = new BlockChain(params, wallet, blockStore);
+
+			final PeerGroup peerGroup = new PeerGroup(params, chain);
+			peerGroup.addAddress(new PeerAddress(InetAddress.getLocalHost()));
+			peerGroup.start();
+			peerGroup.downloadBlockChain();
+			peerGroup.stop();
+
+			// And take them!
+			System.out.println("Claiming "
+					+ Utils.bitcoinValueToFriendlyString(wallet.getBalance())
+					+ " coins");
+			wallet.sendCoins(peerGroup, destination, wallet.getBalance());
+			// Wait a few seconds to let the packets flush out to the network
+			// (ugly).
+			Thread.sleep(5000);
+			System.exit(0);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out
+					.println("First arg should be private key in Base58 format. Second argument should be address "
+							+ "to send to.");
+			return;
+		}
 	}
 
 }
