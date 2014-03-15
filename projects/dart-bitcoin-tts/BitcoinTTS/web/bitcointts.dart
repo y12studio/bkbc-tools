@@ -7,9 +7,9 @@ SpeechSynthesisUtterance speechSynthesisUtterance;
 
 void main() {
   speechSynthesisUtterance = new SpeechSynthesisUtterance();
-  speechSynthesisUtterance.lang = 'en-US';
+  
+  speechSynthesisUtterance.lang = 'zh-TW';
   speechSynthesisUtterance.rate = 1;
-  querySelector('#output').onClick.listen(speakBitcoin);
   initWebSocket(30);
 }
 
