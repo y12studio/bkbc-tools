@@ -66,8 +66,13 @@ public class HelloOdfSign {
 		XMLSignatureFactory factory = XMLSignatureFactory.getInstance("DOM",
 				new org.jcp.xml.dsig.internal.dom.XMLDSigRI());
 
+		String pathEmail = "testdata/sign_hello_world.odt";
+		String pathCitizen = "testdata/notupload/citzen_hello_world.odt";
+		String pathY12Studio = "testdata/notupload/y12studio_hello_world.odt";
+		String pathY12StudioAndCitizen = "testdata/notupload/y12studio_and_citizen_hello_world.odt";
+
 		OdfDocument doc = OdfDocument.loadDocument(new File(
-				"testdata/sign_hello_world.odt"));
+				pathY12StudioAndCitizen));
 		for (String fileEntry : doc.getPackage().getFilePaths()) {
 			// System.out.println(fileEntry);
 			if (fileEntry.startsWith("META-INF/documentsignatures.xml")) {
@@ -77,26 +82,39 @@ public class HelloOdfSign {
 				org.w3c.dom.Document docSig = doc.getPackage()
 						.getDom(fileEntry);
 				Node nodeSig = docSig.getFirstChild();
-				Element sigElement = (Element) nodeSig.getFirstChild();
-				System.out.println(sigElement.getNodeName());
+				System.out.println(nodeSig.getNodeName());
+				System.out.println(nodeSig.getChildNodes().getLength());
 
-				X509Certificate cert = parseSigGetCertOnly(sigElement);
+				for (int i = 0; i < nodeSig.getChildNodes().getLength(); i++) {
+					Node n = nodeSig.getChildNodes().item(i);
+					Element sigElement = (Element) n;
 
-				// https://github.com/pruiz/signserver/blob/master/signserver/modules/SignServer-Lib-ODFDOM/src/main/java/org/odftoolkit/odfdom/pkg/signature/DocumentSignature.java
-				DOMValidateContext dvc = new DOMValidateContext(
-						cert.getPublicKey(), sigElement);
+					System.out.println(sigElement.getNodeName());
+					if (sigElement.getNodeName().equals("Signature")) {
 
-				dvc.setURIDereferencer(new ODFURIDereferencer(doc, factory
-						.getURIDereferencer()));
+						X509Certificate cert = parseSigGetCertOnly(sigElement);
 
-				javax.xml.crypto.dsig.XMLSignature sig = factory
-						.unmarshalXMLSignature(dvc);
+						// https://github.com/pruiz/signserver/blob/master/signserver/modules/SignServer-Lib-ODFDOM/src/main/java/org/odftoolkit/odfdom/pkg/signature/DocumentSignature.java
+						DOMValidateContext dvc = new DOMValidateContext(
+								cert.getPublicKey(), sigElement);
 
-				System.out.println(sig);
+						dvc.setURIDereferencer(new ODFURIDereferencer(doc,
+								factory.getURIDereferencer()));
 
-				// validate signature
-				boolean validate = sig.validate(dvc);
-				System.out.println("VALIDATE RESULT:" + validate);
+						javax.xml.crypto.dsig.XMLSignature sig = factory
+								.unmarshalXMLSignature(dvc);
+
+						System.out.println(sig);
+						try {
+
+							// validate signature
+							boolean validate = sig.validate(dvc);
+							System.out.println("VALIDATE RESULT:" + validate);
+						} catch (Exception ex) {
+							ex.printStackTrace();
+						}
+					}
+				}
 
 			}
 		}
