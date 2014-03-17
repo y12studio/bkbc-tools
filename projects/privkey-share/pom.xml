@@ -55,5 +55,10 @@
   		<artifactId>xmlsec</artifactId>
   		<version>2.0.0-rc1</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.madgag</groupId>
+  		<artifactId>scpkix-jdk15on</artifactId>
+  		<version>1.47.0.3</version>
+  	</dependency>
   </dependencies>
 </project>
