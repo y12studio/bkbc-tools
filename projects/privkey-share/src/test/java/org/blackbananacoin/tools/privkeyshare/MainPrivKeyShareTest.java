@@ -142,7 +142,9 @@ public class MainPrivKeyShareTest {
 	}
 
 	/**
-	 * https://github.com/wesabe/grendel/blob/master/src/test/java/com/wesabe/grendel/openpgp/tests/KeySetGeneratorTest.java
+	 * https://github.com/wesabe/grendel/blob/master/src/test/java/com/wesabe/
+	 * grendel/openpgp/tests/KeySetGeneratorTest.java
+	 * 
 	 * @throws PGPException
 	 */
 	@Test
@@ -254,6 +256,18 @@ public class MainPrivKeyShareTest {
 			}
 		}
 		assertTrue(found);
+
+	}
+
+	@Test
+	public void test23EcKey() {
+		for (int i = 0; i < 3; i++) {
+			ECKey ekey = new ECKey();
+			System.out.println("Pubkey " + i);
+			System.out.println(ekey);
+			System.out.println(BaseEncoding.base16().encode(ekey.getPubKey()));
+			assertNotNull(ekey);
+		}
 
 	}
 
