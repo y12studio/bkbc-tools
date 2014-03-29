@@ -15,8 +15,8 @@
  */
 package org.blackbananacoin.tools.bitcoin;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import com.google.bitcoin.core.AbstractPeerEventListener;
 import com.google.bitcoin.core.NetworkParameters;
@@ -26,18 +26,26 @@ import com.google.bitcoin.utils.BriefLogFormatter;
 import com.google.bitcoin.utils.Threading;
 import com.google.common.net.InetAddresses;
 
-public class WatchBitcoin090Peer {
-	private static Logger log = LoggerFactory
-			.getLogger(WatchBitcoin090Peer.class);
-	
-	public static void main(String[] args) {
+public class BitcoinTestUtils {
+
+	public static void watchDnsPeer(String host) throws UnknownHostException {
+		watchPeer(InetAddress.getByName(host));
+	}
+
+	public static void watchIpPeer(String ip) {
+		watchPeer(InetAddresses.forString(ip));
+	}
+
+	public static void watchPeer(InetAddress addr) {
+		// String peerIp = "stratum.mining.eligius.st";
+		// String peerIp = "107.170.251.205";
 		BriefLogFormatter.init();
 		NetworkParameters params = MainNetParams.get();
 		PeerGroup peerGroup = new PeerGroup(params);
-		// peerGroup.addPeerDiscovery(new DnsDiscovery(params));
-		peerGroup.addAddress(InetAddresses.forString("107.170.251.205"));
+		peerGroup.addAddress(addr);
 		AbstractPeerEventListener evlistener = new DebugPeerEventListener();
 		peerGroup.addEventListener(evlistener, Threading.SAME_THREAD);
 		peerGroup.start();
 	}
+
 }
