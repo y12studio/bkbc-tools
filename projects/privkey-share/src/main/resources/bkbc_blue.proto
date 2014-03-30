@@ -1,0 +1,27 @@
+option java_package = "org.blackbananacoin.incubator.extbitcoinj.proto";
+option java_outer_classname = "BluePuf";
+/* Notes:
+ * - To regenerate after editing, cd project protoc -I=src --java_out=src src/bkbc_blue.proto
+ */
+message ProtoBlue {
+  enum Type {
+    BURN = 0;
+    SEND = 1;
+    ORDER = 2;
+    TEST = 3;
+  }
+  enum VerType {
+    MAIN1 = 0;
+    TEST1 = 1;
+  }
+  
+  enum ExType {
+    BTC_TWD = 1;
+    BTC_LTC = 2;
+  }
+  
+  required VerType version = 1 ;
+  required Type protoType = 2;
+  required int64 bkbcValue = 3;
+  optional ExType exchangeType = 4;
+}
