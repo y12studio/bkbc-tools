@@ -1,5 +1,6 @@
 jetty workshop project
 
+```
 $git clone https://github.com/y12studio/bkbc-tools/
 $cd bkbc-tools/projects/jetty-workshop/
 $/usr/share/maven/bin/mvn -version
@@ -13,3 +14,4 @@ OS name: "linux", version: "3.11.0-12-generic", arch: "amd64", family: "unix"
 $/user/share/maven/bin/mvn package
 $cd target
 $java -jar xxx.jar
+```
