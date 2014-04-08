@@ -54,6 +54,7 @@ public class ScriptOpReturnBuilder {
 		ProtoBlue puf = ProtoBlue.newBuilder().setBkbcValue(200855)
 				.setProtoType(Type.TEST).setExchangeType(ExType.BTC_TWD)
 				.setVersion(VerType.TEST1).build();
+		System.out.println(puf);
 
 		ScriptBuilder builder = new ScriptBuilder();
 		builder.op(OP_RETURN).data(puf.toByteArray());
