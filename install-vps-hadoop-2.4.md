@@ -2,14 +2,15 @@ Install hadoop 2.4.0
 
 [hadoop-common/BUILDING.txt at trunk · apache/hadoop-common](https://github.com/apache/hadoop-common/blob/trunk/BUILDING.txt)
 
-== create droplets
+## create droplets
 
 Add SSH Keys/No root password 
 boot 512MB Ram 20GB SSD Disk Singapore 1 Ubuntu 12.04.4 x64
 
-== os setup
+## os setup
 
 root@ssh key 
+```
 # apt-get update
 # apt-get upgrade
 # apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring
@@ -29,18 +30,20 @@ Java version: 1.7.0_51, vendor: Oracle Corporation
 Java home: /usr/lib/jvm/java-7-openjdk-amd64/jre
 Default locale: en_US, platform encoding: UTF-8
 OS name: "linux", version: "3.8.0-29-generic", arch: "amd64", family: "unix"
+```
 
-== sshd config
+## sshd config
 
+```
 # cat /etc/ssh/sshd_config
 ...
 PasswordAuthentication no
 ...
 UsePAM no
 # reload ssh
-
-== proto buffer 2.5.0
-
+```
+## proto buffer 2.5.0
+```
 # wget https://protobuf.googlecode.com/files/protobuf-2.5.0.tar.gz
 # tar zxvr protobuf-2.5.0.tar.gz
 # cd protobuf-2.5.0
@@ -52,21 +55,29 @@ UsePAM no
 # protoc --version
 libprotoc 2.5.0
 
-== user and group
+```
+## user and group
 
+```
 # addgroup hadoop
 # adduser --ingroup hadoop hduser
 # adduser hduser sudo
+```
 
+## install hadoop
 
-== install hadoop
-
+```
 $ git clone https://github.com/apache/hadoop-common
 $ cd hadoop-common
 $ git tag -l '*2.4.*'
 $ git checkout release-2.4.0
 $ mvn package -Pdist,native -DskipTests -Dtar
+```
 
-== configure 
+## configure 
 
-== test
+TODO
+
+## test
+
+TODO
