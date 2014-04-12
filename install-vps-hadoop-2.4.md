@@ -7,7 +7,9 @@ Install hadoop 2.4.0
 - Add SSH Keys/No root password
 - boot 512MB Ram 20GB SSD Disk Singapore 1 Ubuntu 12.04.4 x64
 
-Update:512MB Ram not enough to mvn package.
+Update:512MB/1G Ram not enough to mvn package. (Swap?)
+
+Build hadoop from VirtualBox VM. 
 
 
 ## os setup
