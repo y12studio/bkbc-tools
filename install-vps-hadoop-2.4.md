@@ -1,6 +1,7 @@
 Install hadoop 2.4.0 
 
-[hadoop-common/BUILDING.txt at trunk · apache/hadoop-common](https://github.com/apache/hadoop-common/blob/trunk/BUILDING.txt)
+- [hadoop-common/BUILDING.txt at trunk · apache/hadoop-common](https://github.com/apache/hadoop-common/blob/trunk/BUILDING.txt)
+- [hadoop-2.1.0-beta.x86_64.tar.gz 64-bit native library Y12 Studio](http://y12.tw/wp/2013/09/diy-hadoop-2-1-0-beta-x86_64-tar-gz-64-bit-native-library/)
 
 ## create droplets
 
