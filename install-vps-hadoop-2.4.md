@@ -4,8 +4,11 @@ Install hadoop 2.4.0
 
 ## create droplets
 
-Add SSH Keys/No root password 
-boot 512MB Ram 20GB SSD Disk Singapore 1 Ubuntu 12.04.4 x64
+- Add SSH Keys/No root password
+- boot 512MB Ram 20GB SSD Disk Singapore 1 Ubuntu 12.04.4 x64
+
+Update:512MB Ram not enough to mvn package.
+
 
 ## os setup
 
@@ -15,7 +18,7 @@ root@ssh key
 # apt-get upgrade
 # apt-get install linux-image-generic-lts-raring linux-headers-generic-lts-raring
 # apt-get install build-essential
-# apt-get install openjdk-7-jdk git maven
+# apt-get install openjdk-7-jdk git maven subversion
 # apt-get install g++ autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev
 # java -version
 java version "1.7.0_51"
@@ -71,7 +74,9 @@ $ git clone https://github.com/apache/hadoop-common
 $ cd hadoop-common
 $ git tag -l '*2.4.*'
 $ git checkout release-2.4.0
+$ cd hadoop-dist
 $ mvn package -Pdist,native -DskipTests -Dtar
+$ file hadoop-dist/target/hadoop-2.1.0-beta/lib/native/*
 ```
 
 ## configure 
