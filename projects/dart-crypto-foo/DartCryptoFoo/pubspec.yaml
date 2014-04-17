@@ -1,0 +1,6 @@
+name: DartCryptoFoo
+description: A sample web application
+dependencies:
+  browser: any
+  cipher: any
+  crypto: any
