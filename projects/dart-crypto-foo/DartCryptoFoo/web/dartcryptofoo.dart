@@ -7,10 +7,30 @@ import 'dart:typed_data';
 import 'packages/cipher/impl/base.dart';
 import 'packages/cipher/cipher.dart';
 import 'cryptohelper.dart';
+import 'dart:js' as js;
 
 // https://github.com/dart-lang/bleeding_edge/blob/master/dart/pkg/crypto/test/base64_test.dart
 
+
+BlockCipher cipher;
+
 void main() {
+  mainForJsExport();
+}
+
+String y12AesFun(String plaintxt) {
+  return CpHelper.encToHex(cipher,plaintxt);
+}
+
+mainForJsExport(){
+  initCipher();
+   final List key = [0x00,0x11,0x22,0x33,0x44,0x55,0x66,0x77,0x88,0x99,0xAA,0xBB,0xCC,0xDD,0xEE,0xFF];
+   cipher = CpHelper.createAesCipher(key);
+   //print(CpHelper.encToHex(cipher,'Lorem ipsum dolor sit amet, consectetur adipiscing elit ........'));  
+  js.context['y12AesFun'] = y12AesFun;
+}
+
+htmlLoad(){
   querySelector("#sample_text_id")
       ..text = "Click me!"
       ..onClick.listen(reverseText);  
