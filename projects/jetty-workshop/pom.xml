@@ -71,7 +71,7 @@
 							<resources>
 								<!-- Copies a single files, modifies its target name -->
 								<resource>
-									<targetPath>${project.build.directory}</targetPath>
+									<targetPath>${project.build.directory}/latest</targetPath>
 									<file>${project.build.directory}/${project.build.finalName}.jar</file>
 									<destFileName>${project.artifactId}-latest.jar</destFileName>
 								</resource>

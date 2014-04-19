@@ -1,7 +1,7 @@
 {
   "y12jetty": {
     "image": "java7",
-    "path": "target",
+    "path": "target/latest",
     "build": "mvn package", 
     "test": "",
     "start": "java -jar bkbc-tool-jetty-workshop-latest.jar"
