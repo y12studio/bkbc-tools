@@ -35,7 +35,7 @@ public class JettyCrosServer {
 	Server server;
 	
 	public JettyCrosServer() throws Exception {
-		server = new Server(8080);
+		server = new Server(80);
 		HandlerList handlers = new HandlerList();
         ResourceHandler resource_handler = new ResourceHandler();
         resource_handler.setDirectoriesListed(true);

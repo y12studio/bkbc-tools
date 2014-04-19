@@ -19,6 +19,27 @@ $java -jar xxx.jar
 bowery
 
 ```
-git clone https://github.com/y12studio/bkbc-tools
-
+$ git clone https://github.com/y12studio/bkbc-tools/
+$ cd bkbc-tools/projects/jetty-workshop/
+$ cat bowery.json
+{
+  "y12jetty": {
+    "image": "java7",
+    "path": "target",
+    "build": "mvn package",
+    "test": "",
+    "start": "java -jar bkbc-tool-jetty-workshop-latest.jar"
+  }
+}
+$ mvn package
+$ java -jar target/bkbc-tool-jetty-workshop-latest.jar
+...
+2014-04-19 16:27:19.378:INFO:oejs.ServerConnector:main: 
+  Started ServerConnector@237dc815{HTTP/1.1}{0.0.0.0:8080}
+...
+$ bowery connect
+Hey there XXX. Connecting you to Bowery now...
+Uploading file changes to y12jetty.
+Service y12jetty is available at http://y12jetty.53523556bc9476670c000010.boweryapps.com.
+Service y12jetty upload complete. Syncing file changes.
 ```

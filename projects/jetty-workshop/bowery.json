@@ -1,9 +1,9 @@
 {
-  "y12jetty": { // the name of the service
-    "image": "java7", // the image it’s running
-    "path": "target", // where the code is (relatively)
-    "build": "mvn package", // any compiling & installation required
-    "test": "", // run any tests
-    "start": "java -jar bkbc-tool-jetty-workshop-latest.jar" // how to start the app
+  "y12jetty": {
+    "image": "java7",
+    "path": "target",
+    "build": "mvn package", 
+    "test": "",
+    "start": "java -jar bkbc-tool-jetty-workshop-latest.jar"
   }
 }
