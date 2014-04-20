@@ -16,7 +16,6 @@ USER root
 # Install Application
 ENV PREFIX /usr/local/y13app
 ADD target/latest/bkbc-tool-jetty-workshop-latest.jar $PREFIX/app.jar
-RUN cd $PREFIX && mvn package
 # Define default command.
 # java -jar $PREFIX/app.jar
 CMD ["java"]
