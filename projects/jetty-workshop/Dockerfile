@@ -19,4 +19,4 @@ ENV PREFIX /usr/local/y13app
 ADD target/latest/bkbc-tool-jetty-workshop-latest.jar $PREFIX/app.jar
 # Define default command.
 # java -jar $PREFIX/app.jar
-CMD ["java"]
+CMD java -jar $PREFIX/app.jar
