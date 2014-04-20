@@ -1,10 +1,10 @@
 #
-# Jetty App Dockerfile
-#
+# Jetty App Dockerfile (mvn package on host)
+# host
 # https://github.com/y12studio/bkbc-tools/projects/jetty-workshop/
 # https://github.com/y12studio/bkbc-tools/issues/27
 # git clone https://github.com/y12studio/bkbc-tools
-# cd projects/jetty-workshop/
+# cd projects/jetty-workshop/ && mvn package
 # sudo docker.io build -t="y13/jettyapp" .
 #
 
@@ -17,8 +17,8 @@ RUN apt-get install git maven
 
 # Install Application
 ENV PREFIX /usr/local/y13app
-ADD . $PREFIX
+ADD target/latest/bkbc-tool-jetty-workshop-latest.jar $PREFIX/app.jar
 RUN cd $PREFIX && mvn package
 # Define default command.
-# java -jar $PREFIX/target/latest/bkbc-tool-jetty-workshop-latest.jar
+# java -jar $PREFIX/app.jar
 CMD ["java"]
