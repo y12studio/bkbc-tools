@@ -20,9 +20,14 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.net.InetAddresses;
 
 public class MainApp {
+	
+	private static final Logger logger = LoggerFactory.getLogger(MainApp.class);
 	
 	public static void printNetworkIp() throws SocketException{
 		Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
@@ -34,7 +39,7 @@ public class MainApp {
 		    while (addresses.hasMoreElements()){
 		        InetAddress addr = addresses.nextElement();
 		        if(InetAddresses.isInetAddress(addr.getHostAddress())){
-		        	System.out.println("IP:"+addr.getHostAddress());		        	
+		        	logger.info("IP:"+addr.getHostAddress());		        	
 		        }
 		    }
 		}
