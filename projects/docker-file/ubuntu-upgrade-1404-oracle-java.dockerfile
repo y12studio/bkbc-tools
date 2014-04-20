@@ -1,11 +1,8 @@
 # ubuntu-14.04
 # ref https://index.docker.io/u/angelrr7702/docker-ubuntu-14.04/
-FROM stackbrew/ubuntu:13.10
+FROM angelrr7702/docker-ubuntu-14.04
 MAINTAINER Y12STUDIO
 RUN locale-gen en_US.UTF-8
-RUN (DEBIAN_FRONTEND=noninteractive apt-get update &&  DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -q && DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade -y -q )
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y nano apt-utils update-manager-core
-RUN DEBIAN_FRONTEND=noninteractive do-release-upgrade -d -f DistUpgradeViewNonInteractive
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:webupd8team/java
 RUN apt-get update
