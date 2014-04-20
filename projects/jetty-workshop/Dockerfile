@@ -8,7 +8,8 @@
 # sudo docker.io build -t="y13/jettyapp" .
 #
 
-FROM y12docker/ubuntu-java:oracle-java7
+#FROM y12docker/ubuntu-java:oracle-java7
+FROM bowery/java
 MAINTAINER Y12STUDIO
 
 USER root
