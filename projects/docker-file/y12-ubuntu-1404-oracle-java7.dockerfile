@@ -2,7 +2,7 @@
 #
 # Make base image first
 # sudo apt-get install bootstrap
-# sudo /usr/share/docker.io/contrib/mkimage-debootstrap.sh y12/ubuntu trusty
+# sudo /usr/share/docker.io/contrib/mkimage-debootstrap.sh -i iproute,iputils-ping,git,wget,curl,vim,less,python,net-tools y12/ubuntu trusty
 # 
 FROM y12/ubuntu:trusty
 MAINTAINER Y12STUDIO
