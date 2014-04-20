@@ -3,7 +3,7 @@
 # sudo apt-get install bootstrap
 # sudo /usr/share/docker.io/contrib/mkimage-debootstrap.sh y12/ubuntu trusty
 # 
-FROM y12:ubuntu:trusty
+FROM y12/ubuntu:trusty
 MAINTAINER Y12STUDIO
 RUN locale-gen en_US.UTF-8
 RUN apt-get install -y software-properties-common
