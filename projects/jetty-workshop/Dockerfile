@@ -13,8 +13,6 @@ MAINTAINER Y12STUDIO
 
 USER root
 
-RUN apt-get install git maven
-
 # Install Application
 ENV PREFIX /usr/local/y13app
 ADD target/latest/bkbc-tool-jetty-workshop-latest.jar $PREFIX/app.jar
