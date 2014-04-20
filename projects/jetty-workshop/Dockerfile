@@ -3,12 +3,17 @@
 #
 # https://github.com/y12studio/bkbc-tools/projects/jetty-workshop/
 # https://github.com/y12studio/bkbc-tools/issues/27
+# git clone https://github.com/y12studio/bkbc-tools
+# cd projects/jetty-workshop/
+# sudo docker.io build -t="y13/jettyapp" .
 #
 
 FROM y12docker/ubuntu-java:oracle-java7
 MAINTAINER Y12STUDIO
 
 USER root
+
+RUN apt-get install git maven
 
 # Install Application
 ENV PREFIX /usr/local/y13app
