@@ -9,7 +9,8 @@
 #
 
 #FROM y12docker/ubuntu-java:oracle-java7
-FROM bowery/java
+# FROM bowery/java
+FROM y13/ubuntu-java7
 MAINTAINER Y12STUDIO
 
 USER root
