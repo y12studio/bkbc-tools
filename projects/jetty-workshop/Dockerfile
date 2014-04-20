@@ -12,7 +12,6 @@ USER root
 
 # Install Application
 RUN git clone https://github.com/y12studio/bkbc-tools
-RUN cd bkbc-tools/projects/jetty-workshop/
-RUN mvn package
+RUN cd bkbc-tools/projects/jetty-workshop/ && mvn package
 # Define default command.
 CMD ["java"]
