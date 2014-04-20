@@ -2,16 +2,18 @@
 # Jetty App Dockerfile
 #
 # https://github.com/y12studio/bkbc-tools/projects/jetty-workshop/
+# https://github.com/y12studio/bkbc-tools/issues/27
 #
 
-# Pull base image.
 FROM y12docker/ubuntu-java:oracle-java7
 MAINTAINER Y12STUDIO
 
 USER root
 
 # Install Application
-RUN git clone https://github.com/y12studio/bkbc-tools
-RUN cd bkbc-tools/projects/jetty-workshop/ && mvn package
+ENV PREFIX /usr/local/y13app
+ADD . $PREFIX
+RUN cd $PREFIX && mvn package
 # Define default command.
+# java -jar $PREFIX/target/latest/bkbc-tool-jetty-workshop-latest.jar
 CMD ["java"]
