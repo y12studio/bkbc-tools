@@ -1,4 +1,5 @@
 # ubuntu 14.04 Java 
+#
 # Make base image first
 # sudo apt-get install bootstrap
 # sudo /usr/share/docker.io/contrib/mkimage-debootstrap.sh y12/ubuntu trusty
