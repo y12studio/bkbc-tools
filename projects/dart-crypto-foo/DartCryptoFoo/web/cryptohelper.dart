@@ -4,7 +4,6 @@
 library y12cryptohelper;
 
 import "package:cipher/cipher.dart";
-import "package:cipher/impl/base.dart";
 import 'dart:typed_data';
 import 'packages/crypto/crypto.dart';
 
