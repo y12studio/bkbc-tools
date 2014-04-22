@@ -1,6 +1,7 @@
 name: DartCryptoFoo
 description: A sample web application
 dependencies:
+  asn1lib: any
   browser: any
   cipher: any
   crypto: any

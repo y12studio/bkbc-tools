@@ -8,22 +8,37 @@ import 'packages/cipher/impl/base.dart';
 import 'packages/cipher/cipher.dart';
 import 'cryptohelper.dart';
 import 'dart:js' as js;
+import 'dart:math';
 
 // https://github.com/dart-lang/bleeding_edge/blob/master/dart/pkg/crypto/test/base64_test.dart
-
 
 BlockCipher cipher;
 
 void main() {
-  mainForJsExport();
+  initCipher();    
+  mainForJsExport();  
+  querySelector("#btnGenKey")..onClick.listen((e){
+    genRsaKey();
+  });
 }
+
+genRsaKey() {
+  var now = new DateTime.now();
+  var kp = CpHelper.rsaKeyGen(1024,'Time-${now.millisecondsSinceEpoch}-Ran-${new Random().nextInt(1000)}');
+  querySelector('#taRsaJson')
+  ..text = CpHelper.serializeRSAKeys(kp);
+  
+  RSAPublicKey rsaKey = kp.publicKey;
+}
+
+
 
 String y12AesFun(String plaintxt) {
   return CpHelper.encToHex(cipher,plaintxt);
 }
 
 mainForJsExport(){
-  initCipher();
+ 
    final List key = [0x00,0x11,0x22,0x33,0x44,0x55,0x66,0x77,0x88,0x99,0xAA,0xBB,0xCC,0xDD,0xEE,0xFF];
    cipher = CpHelper.createAesCipher(key);
    //print(CpHelper.encToHex(cipher,'Lorem ipsum dolor sit amet, consectetur adipiscing elit ........'));  
