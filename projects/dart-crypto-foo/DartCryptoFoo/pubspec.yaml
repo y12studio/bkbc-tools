@@ -5,4 +5,5 @@ dependencies:
   browser: any
   cipher: any
   crypto: any
+  http_server: any
   js: any
