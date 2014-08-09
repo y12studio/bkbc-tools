@@ -35,3 +35,11 @@ $ sudo docker-ssh $CID /root/cli info
 $ sudo docker-ssh $CID /root/cli ip
 172.17.0.2
 ```
+## override bitcoin.conf
+
+```
+$ cd /tmp
+$ sudo docker run test/bitcoind cat /.bitcoin/bitcoin.conf > mybitcoin.conf
+$ nano mybitcoin.conf
+$ sudo docker run -v `pwd`/mybitcoin.conf:/.bitcoin/bitcoin.conf test/bitcoind cat /.bitcoin/bitcoin.conf
+```

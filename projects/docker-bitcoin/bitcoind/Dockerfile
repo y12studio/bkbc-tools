@@ -23,6 +23,7 @@ EXPOSE 8333 8332
 ADD bitcoin.conf /.bitcoin/bitcoin.conf
 ADD run.sh /etc/service/bitcoind/run
 ADD cli.sh /root/cli
+ADD README.md /root/README.md
 RUN chmod +x /etc/service/bitcoind/run && chmod +x /root/cli
 
 CMD ["/sbin/my_init"]
