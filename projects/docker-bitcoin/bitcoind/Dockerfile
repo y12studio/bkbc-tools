@@ -1,32 +1,32 @@
-FROM ubuntu:14.04
+FROM phusion/baseimage:0.9.12
 MAINTAINER Y12STUDIO <y12studio@gmail.com>
 
-ENV BITCOIN_DOWNLOAD_VERSION 0.9.2.1
+ENV BITCOIND_VERSION 0.9.2
+ENV HOME /root
+ENV LANG zh_TW.UTF-8
+ENV LC_ALL zh_TW.UTF-8
+ENV DEBIAN_FRONTEND noninteractive
+# Use UTF-8 locale inside the container
+RUN locale-gen zh_TW.UTF-8 && echo 'LANG="zh_TW.UTF-8"' > /etc/default/locale
+# Use the phusion baseimage's insecure key
+RUN /usr/sbin/enable_insecure_key
 
-RUN apt-get update
-RUN apt-get install -y wget build-essential make g++ python-leveldb libboost-all-dev libssl-dev libdb++-dev libtool autotools-dev autoconf libboost-all-dev bsdmainutils pkg-config
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install -y git build-essential libtool autotools-dev autoconf pkg-config libssl-dev libboost-all-dev bsdmainutils
 
-WORKDIR /tmp
-RUN wget --no-check-certificate https://github.com/bitcoin/bitcoin/archive/v$BITCOIN_DOWNLOAD_VERSION.tar.gz
+RUN git clone -b $BITCOIND_VERSION https://github.com/bitcoin/bitcoin.git /bitcoind-git
+RUN cd /bitcoind-git && ./autogen.sh && ./configure --disable-wallet --without-gui && make -j4
+RUN strip /bitcoind-git/src/bitcoind
 
-RUN tar xfz v$BITCOIN_DOWNLOAD_VERSION.tar.gz && mv bitcoin-$BITCOIN_DOWNLOAD_VERSION bitcoin
+EXPOSE 8333 8332
 
-WORKDIR /tmp/bitcoin
-RUN ./autogen.sh
-RUN ./configure --disable-wallet
-RUN make
-RUN make install
+ADD bitcoin.conf /.bitcoin/bitcoin.conf
+ADD run.sh /etc/service/bitcoind/run
+ADD cli.sh /root/cli
+RUN chmod +x /etc/service/bitcoind/run && chmod +x /root/cli
 
-ADD . /bitcoind
-WORKDIR /bitcoind
+CMD ["/sbin/my_init"]
 
-EXPOSE 8333
-EXPOSE 8332
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-ADD start.sh /start.sh
-RUN chmod +x /start.sh
-
-# just a check that bitcoind exists on path
-RUN file `which bitcoind`
-
-ENTRYPOINT ["/start.sh"]
