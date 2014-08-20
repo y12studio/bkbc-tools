@@ -1,0 +1,169 @@
+<html>
+<head>
+<meta name="description" content="polymer core-scaffold paper-ripple template" />
+<script src="http://www.polymer-project.org/components/platform/platform.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://cdn.rawgit.com/y12studio/bkbc-tools/master/projects/jscdn/bitcoinjs-1.0.2.min.js"></script>
+<link rel="import" href="http://www.polymer-project.org/components/polymer/polymer.html">
+<link rel="import" href="http://www.polymer-project.org/components/paper-elements/paper-elements.html">
+<link rel="import" href="http://www.polymer-project.org/components/core-elements/core-elements.html">
+<style>
+ html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      font-family: sans-serif;
+    }
+</style>
+</head>
+<body unresolved>
+<app-root></app-root>
+<polymer-element name="bjs-addr" hidden attributes="data">
+<script>
+  Polymer('bjs-addr', {
+	dataChanged:function(oldVal,newVal){
+		var key = Bitcoin.ECKey.makeRandom();
+		//console.log(key.toWIF());
+		//console.log(key.pub.getAddress().toString())
+		newVal.result = {wif:key.toWIF(),addr:key.pub.getAddress().toString()};
+		console.log('changed',newVal);
+	},
+    ready: function() {
+	    //this.data.result='haha';
+		//this.globals = this.$.globals;
+		//console.log('ready',this.globals);
+    }
+	});
+</script>
+</polymer-element>
+<polymer-element name="app-root" attributes="pobj">
+<template>
+<style>
+    core-scaffold {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    
+    .content {
+      background-color: #fff;
+      height: 5000px;
+      padding: 20px;
+    }
+    
+    /* some default styles for mode="cover" on core-scaffold */
+    core-scaffold[mode=cover]::shadow core-header-panel::shadow #mainContainer {
+      left: 120px;
+    }
+    
+    core-scaffold[mode=cover] .content {
+      margin: 20px 100px 20px 0;
+    }
+    
+ /* FAB */
+    .fab {
+      position: relative;
+      display: inline-block;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      color: #fff;
+      overflow: hidden;
+      transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition-delay: 0.2s;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+    }
+    
+    .fab.red {
+      background-color: #d23f31;
+    }
+    
+    .fab.blue {
+      background-color: #4285f4;
+    }
+    
+    .fab.green {
+      background-color: #0f9d58;
+    }
+    
+    .fab:active {
+      box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+      transition-delay: 0s;
+    }
+    
+    .fab > core-icon {
+      margin: 16px;
+    }
+    
+    .fab > core-icon::shadow path {
+      fill: #fff;
+    }
+	.card {
+      background: white;
+      position: relative;
+      margin: 16px;
+      border-radius: 5px;
+    }
+
+</style>
+ <bjs-addr data="{{pobj.data}}"></bjs-addr>
+ <core-scaffold>
+  
+    <core-header-panel navigation flex mode="seamed">
+      <core-toolbar style="background-color: #526E9C; color: #fff;">Application</core-toolbar>
+      <core-menu>
+        <core-item>
+		<a href="https://github.com/bitcoinjs/bitcoinjs-lib">bitcoinjs-lib</a>
+		</core-item>
+        <core-item icon="settings" label="item">
+		</core-item>
+      </core-menu>
+    </core-header-panel>
+    
+    <div tool>Title</div>
+    
+    <div class="content">
+       <section>
+  
+    <div class="fab red">
+      <core-icon icon="add"></core-icon>
+      <paper-ripple class="circle recenteringTouch" fit></paper-ripple>
+    </div>
+    
+    <div class="fab blue">
+      <core-icon icon="mail"></core-icon>
+      <paper-ripple class="circle recenteringTouch" fit></paper-ripple>
+    </div>
+    
+    <div class="fab green">
+      <core-icon icon="create"></core-icon>
+      <paper-ripple class="circle recenteringTouch" fit></paper-ripple>
+    </div>
+  
+  </section>
+   <section>
+    <div class="card">
+	    <paper-item icon="lock" label="WIF:{{pobj.data.result.wif}}"></paper-item>
+        <paper-item icon="link" label="ADDR:{{pobj.data.result.addr}}"></paper-item>
+        <paper-shadow z="1"></paper-shadow>
+      </div>
+  </section>
+  
+   </div>
+  
+</core-scaffold>
+</template>
+<script>
+  Polymer('app-root', {
+    pobj:{foo:100,data:{}},
+    ready: function() {
+	 //
+    }
+});
+</script>
+</polymer-element>
+</body>
+</html>

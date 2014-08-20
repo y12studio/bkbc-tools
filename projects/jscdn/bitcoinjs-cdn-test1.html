@@ -1,0 +1,22 @@
+<html>
+<head>
+<meta name="description" content="bitcoinjs cdn test" />
+<script src="https://cdn.rawgit.com/y12studio/bkbc-tools/master/projects/jscdn/bitcoinjs-1.0.2.min.js"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+$(document).ready(function() {
+ var key = Bitcoin.ECKey.makeRandom();
+ // Print your private key (in WIF format)
+console.log(key.toWIF())
+// => Kxr9tQED9H44gCmp6HAdmemAzU3n84H3dGkuWTKvE23JgHMW8gct
+
+// Print your public key (toString defaults to a Bitcoin address)
+console.log(key.pub.getAddress().toString())
+// => 14bZ7YWde4KdRb5YN7GYkToz3EHVCvRxkF
+});
+</script>
+</head>
+<body unresolved>
+<p>hello</p>
+</body>
+</html>
