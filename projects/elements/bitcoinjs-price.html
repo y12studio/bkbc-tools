@@ -1,0 +1,158 @@
+﻿<html>
+<head>
+<title>Bitcoin Price</title>
+<meta name="description" content="polymer core-scaffold paper-ripple template" />
+<script src="http://www.polymer-project.org/components/platform/platform.js"></script>
+<script src="http://www.chartjs.org/assets/Chart.min.js"></script>
+<link rel="import" href="http://www.polymer-project.org/components/polymer/polymer.html">
+<link rel="import" href="http://www.polymer-project.org/components/paper-elements/paper-elements.html">
+<link rel="import" href="http://www.polymer-project.org/components/core-elements/core-elements.html">
+<style>
+ html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      font-family: sans-serif;
+    }
+</style>
+</head>
+<body unresolved>
+<app-root></app-root>
+<polymer-element name="chart-line" attributes="width height labels values colors foo">
+  <template>
+    <canvas id="canvas" width="{{width}}" height="{{height}}"></canvas>
+  </template>
+  <script>
+    Polymer({
+	  fooChanged:function(oldVal,newVal){
+	    console.log('foo',newVal);
+		this.chart.datasets[0].points[1].value = newVal;
+		this.chart.update();
+		console.log(this.chart.datasets[0]);
+	  },
+      ready: function () {
+        this.datasets = [];
+        this.values.forEach(function (val, i) {
+          this.datasets.push({
+            fillColor:    "rgba(" + this.colors[i] + ",0.5)",
+            strokeColor:  "rgba(" + this.colors[i] + ",1)",
+            pointColor:   "rgba(" + this.colors[i] + ",1)",
+            pointStrokeColor: "#fff",
+            data: this.values[i]
+          });
+        }, this);
+        this.data = { labels: this.labels, datasets: this.datasets };
+        console.log(this.data);
+        this.ctx = this.$.canvas.getContext('2d');
+        this.chart = new Chart(this.ctx).Line(this.data);
+      },
+      labels: ["X", "Feb", "Y", "Apr", "May", "Jun", "Jul"],
+      values: [
+        [65,59,90,81,56,55,45],
+        [28,48,40,19,96,27,100]
+      ],
+      colors: [
+        "253,180,92",
+        "247,70,74",
+        "70,191,189",
+        "148,159,177",
+        "77,83,96"
+      ]
+    });
+  </script>
+</polymer-element>
+<polymer-element name="app-root" attributes="pobj">
+<template>
+<style>
+    core-scaffold {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    
+    .content {
+      background-color: #fff;
+      height: 5000px;
+      padding: 20px;
+    }
+    
+    /* some default styles for mode="cover" on core-scaffold */
+    core-scaffold[mode=cover]::shadow core-header-panel::shadow #mainContainer {
+      left: 120px;
+    }
+    
+    core-scaffold[mode=cover] .content {
+      margin: 20px 100px 20px 0;
+    }
+    paper-slider {
+      width: 80%;
+    }
+	
+	 section {
+      max-width: 1000px;
+      padding: 20px 0;
+	  margin:1em;
+    }
+	
+	.card {
+      background: white;
+      position: relative;
+      margin: 16px;
+      border-radius: 5px;
+    }
+
+</style>
+  <core-ajax
+    auto
+    url="https://api.bitcoinaverage.com/ticker/global/USD"
+    handleAs="json"
+    response={{resp}}></core-ajax>
+ <core-scaffold>
+  
+    <core-header-panel navigation flex mode="seamed">
+      <core-toolbar style="background-color: #526E9C; color: #fff;">比特幣</core-toolbar>
+      <core-menu>
+        <core-item>
+		<a href="https://www.facebook.com/groups/bitcoin.tw/">FB比特幣中文社團</a>
+		</core-item>
+        <core-item icon="settings" label="WOO">
+		</core-item>
+      </core-menu>
+    </core-header-panel>
+    
+    <div tool>算一下</div>
+    
+    <div class="content">
+	<section>
+	 <div center horizontal layout>
+      <div>BTCkUSD</div>
+      <paper-slider value="{{psvalue}}" max="500" editable></paper-slider>
+    </div>
+	</section>
+	<section>
+	<chart-line width="600" height="300" foo="{{psvalue}}"></chart-line>
+	</section>
+   <section>
+    <div class="card">
+	    <paper-item icon="lock" label="BTCUSD(24 avg)={{resp['24h_avg']}}"></paper-item>
+        <paper-item icon="link" label="ADDR"></paper-item>
+        <paper-shadow z="1"></paper-shadow>
+      </div>
+  </section>
+  </div>
+</core-scaffold>
+</template>
+<script>
+  Polymer('app-root', {
+    pobj:{foo:100,data:{}},
+    ready: function() {
+	 //
+    }
+});
+</script>
+</polymer-element>
+</body>
+</html>
