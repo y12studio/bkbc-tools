@@ -1,7 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER Y12STUDIO <y12studio@gmail.com>
 
-
 RUN locale-gen --no-purge en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
